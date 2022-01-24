@@ -19,6 +19,7 @@ function solution(tickets) {
   
   // 항상 "ICN" 공항에서 출발합니다.
   dfs(tickets,"ICN",["ICN"]);
+  
   //만일 가능한 경로가 2개 이상일 경우 알파벳 순서가 앞서는 경로를 return 합니다.
   answer.sort();
   console.log(answer[0]);

@@ -5,6 +5,7 @@ function permutation(arr, selctionNum) {
   if(selctionNum === 1) {
       return arr.map((el) => [el]);
   }
+  
   //forEach(currentValue, index, array)
   arr.forEach((fixed, index, origin) => {
       // fixed를 제외한 나머지 배열 중에서
