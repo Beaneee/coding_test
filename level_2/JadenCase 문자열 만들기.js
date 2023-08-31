@@ -10,6 +10,7 @@ function solution(s) {
       if(str.length === 0) {
           return
       }
+      //charAt();
       str[0] = str[0].toUpperCase();
       return str.join('');
   }).join(' ')
