@@ -1,22 +1,29 @@
 function solution(people, limit) {
-  var answer = 0;
-  
-  let count = 0; //1명만 탈 수 있는 경우
-  let count2 = 0; //2명이 탈 수 있는 경우
-
-  const length = people.length;
-  
-  for(i = 0; i < length; i++) {
-      const min = Math.min(...people);
-      
-      if(min <= limit - min) {
-          const minIdx = people.findIndex((v) => v === min);
-          people.splice(minIdx, 1);
-          count2++
-      } else {
-          count = count + people.length;
-          people.splice(0, people.length);
-      }
-  }
-  return count + (count2 % 2 === 0 ? count2 / 2 : count2);
+    
+    let count = 0;
+    const initRecursiveCount = people.length;
+    let copyArr = people.sort((a, b) => b - a);
+    
+    
+    for(i = 0; i < initRecursiveCount; i++) {
+        const weight = copyArr[0]; 
+        const differ = limit - weight;
+        
+        if(weight > differ) {
+            count++;
+            people.shift();
+        } else {
+            
+            if(copyArr.length > 1) {
+                count += (copyArr.length / 2)
+            }
+            
+            if(copyArr.length === 1) {
+                count++
+            }
+            copyArr = [];
+        }
+    }
+    
+    return count;
 }
