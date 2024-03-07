@@ -1,8 +1,17 @@
-//소인수분해와 지수를 생각해보자.
-//소인수분해들의 최대지수끼리 곱한다.
-function solution(arr) {
-  //arr의 요소들을 뽑아서 1 ~ arr[i]번 반복하면서 나머지가 0이 되어야한다.
-  //1과 자기자신을 제외한 나머지를 곱한다
-  //그리고 그 수들의 최대지수를 구한다,,,
-  //각각 곱한다...
+/**
+ * 최대공약수를 구하는 함수
+ */
+const getGCD = (a, b) => {
+  if(a % b === 0) return b
+  return getGCD(b, a % b);
+}
+/**
+ * 최소공배수를 구하는 함수
+ */
+const getLCM = (a, b) => {
+  return (a * b) / getGCD(a, b)
+}
+
+const solution = (arr) => {
+  
 }
