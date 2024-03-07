@@ -1,7 +1,7 @@
 /**
  * 최대공약수를 구하는 함수
  */
-const getGCD = (a, b) => {
+ const getGCD = (a, b) => {
   if(a % b === 0) return b
   return getGCD(b, a % b);
 }
@@ -13,5 +13,10 @@ const getLCM = (a, b) => {
 }
 
 const solution = (arr) => {
-  
+  let result = arr[0];
+  for(i = 0; i < arr.length; i++) {
+    result = getLCM(result, arr[i])
+  }
+    
+  return result
 }
