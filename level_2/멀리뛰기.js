@@ -7,5 +7,5 @@ function solution(n) {
       arr.push(arr[i - 1] + arr[i - 2])
   }
   
-  return arr[arr.length - 1]
+  return arr[arr.length - 1] % 1234567
 }
