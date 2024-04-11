@@ -1,3 +1,5 @@
+//너무나도 큰 수를 arr push하면 메모리 부족 에러가 뜬다.
+//배열 말고 다른 방법을 찾아야한다.
 function solution(n, left, right) {
   //1. n * n 행렬 만들기
   let matrix = [];
@@ -20,6 +22,5 @@ function solution(n, left, right) {
           arr.push(matrix[i][j]);
       }
   }
-   
   return arr.slice(left, right + 1)
 }
