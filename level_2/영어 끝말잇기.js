@@ -5,9 +5,7 @@ function solution(n, words) {
   for(let i = 0; i < words.length; i++) {
     //1. 중복된 단어를 말하거나
     if(prevWordList.includes(words[i])) {
-      const count = n < i ? Math.floor(i / n) : Math.floor(n / i);
-      const remainder = n < i ? (i + 1) % n : n % (i + 1);
-      return [remainder === 0 ? n : remainder, count + 1];
+      return [(i % n) + 1, Math.floor(i / n) + 1];
     }
 
     if(prevWordList[i-1]) {
@@ -15,9 +13,7 @@ function solution(n, words) {
       const firstOfCurrWord = words[i].charAt(0); 
       //2. 잘못된 단어를 말한 경우
       if(lastOfPrevWord !== firstOfCurrWord) {
-        const count = n < i ? i / n : n / i;
-        const remainder = n < i ? (i + 1) % n : n % (i + 1);
-        return [remainder === 0 ? n : remainder, count + 1];
+        return [(i % n) + 1, Math.floor(i / n) + 1];
       }
 
     }
