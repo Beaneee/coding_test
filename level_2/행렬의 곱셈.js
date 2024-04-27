@@ -2,7 +2,8 @@ function solution(arr1, arr2) {
   //arr2를 변환 시키자.
   let arr2Column = [];
   let result = [];
-  for(let i = 0; i < arr2.length; i++) {
+
+  for(let i = 0; i < arr2[0].length; i++) {
     let temp = [];
     for(let j = 0; j < arr2.length; j++) {
       temp.push(arr2[j][i]);
