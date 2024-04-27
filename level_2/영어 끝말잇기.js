@@ -1,21 +1,28 @@
 function solution(n, words) {
-  let answer = [];
-  let arr = [];
-  let nth = 0;
+  let prevWordList = [];
+  let result = [];
+
   for(let i = 0; i < words.length; i++) {
-      //같은 단어일 경우;
-      if(arr.includes(words[i])) {
-          nth = (i % n) + 1;
-          return
-      } 
-      //잘못된 단어로 끝말잇기를 할 경우;
-      arr.push(words[i]);
-      if(arr[i-1]) {
-          let lastWord = arr[i-1].charAt(arr[i-1].length-1);
-          let firstWord = arr[i].charAt(0);
-          console.log(lastWord, firstWord);
+    //1. 중복된 단어를 말하거나
+    if(prevWordList.includes(words[i])) {
+      const count = n < i ? Math.floor(i / n) : Math.floor(n / i);
+      const remainder = n < i ? (i + 1) % n : n % (i + 1);
+      return [remainder === 0 ? n : remainder, count + 1];
+    }
+
+    if(prevWordList[i-1]) {
+      const lastOfPrevWord = prevWordList[i-1].charAt(prevWordList[i-1].length - 1);
+      const firstOfCurrWord = words[i].charAt(0); 
+      //2. 잘못된 단어를 말한 경우
+      if(lastOfPrevWord !== firstOfCurrWord) {
+        const count = n < i ? i / n : n / i;
+        const remainder = n < i ? (i + 1) % n : n % (i + 1);
+        return [remainder === 0 ? n : remainder, count + 1];
       }
+
+    }
+    prevWordList.push(words[i]);
   }
-  answer[0] = nth;
-  return answer;
+  //3. 틀린 사람이 없는 경우는 [0, 0]을 return
+  return [0, 0];
 }
