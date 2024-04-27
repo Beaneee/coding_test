@@ -11,16 +11,11 @@ function solution(arr1, arr2) {
   const arr2Column = transposeMatrix(arr2);
   let result = [];
 
-  for(let k = 0; k < arr1.length; k++) {
-    let a = [];
-    for(let l = 0; l < arr2Column.length; l++) {
-      let count = 0;
-      for(let m = 0; m < arr2Column[l].length; m++) {
-        count += (arr1[k][m] * arr2Column[l][m]);
-      }
-      a.push(count);
-    }
-    result.push(a);
+  for(row of arr1) {
+    const newRow = arr2Column.map((column) => 
+      row.reduce((acc, val, index) => acc + val * column[index], 0)
+    )
+    result.push(newRow);
   }
 
   return result
