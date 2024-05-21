@@ -1,20 +1,23 @@
 function solution(want, number, discount) {
-  let startInx = 0;
   let arr = [];
-  for(let i = startInx; i < discount.length; i++) {
-    arr.push(discount[i]);
+  let result = 0;
+  for(let i = 0; i < discount.length; i++) {
+    arr = discount.slice(i, i+10);
+
+    let correctCount = 0;
+
+    for(let idx = 0; idx < want.length; idx++) {
+      const item = want[idx];
+      const count = arr.filter((v) => v === item).length;
+
+      if(count === number[idx] && count) {
+        correctCount++;
+      }
+    }
+
+    if(correctCount === want.length) {
+      result++;
+    }
   }
-
-  want.forEach((item, idx) => {
-    const count = arr.filter((v) => v === item).length;
-    
-    if(count !== number[idx]) {
-      return
-    }
-
-    if(!count) {
-      return
-    }
-    console.log(count, item, number[idx]);
-  })
+  return result;
 }
