@@ -2,6 +2,10 @@
 function solution(cacheSize, cities) {
   let visitedArr = [];
   let time = 0;
+
+  //7,17번 예외
+  if(cacheSize === 0) return cities.length * 5;
+
   for(let i = 0; i < cities.length; i++) {
     // 각 도시 이름은 공백, 숫자, 특수문자 등이 없는 영문자로 구성되며, 대소문자 구분을 하지 않는다.
     const city = cities[i].toLowerCase();
