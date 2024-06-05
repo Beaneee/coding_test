@@ -1,24 +1,28 @@
 function solution(priorities, location) {
   let arr = [];
 
-  //hash map으로 data 생성
+  //location, priorty object배열 생성
   for(let i = 0; i < priorities.length; i++) {
-    arr.push({[i] : priorities[i]});
-  } 
-  
-  let queueList = [];
+    arr.push({
+      index: i,
+      priorty: priorities[i]
+    });
+  }
 
-  //data의 value를 비교하며 queuelist 생성
+  let order = 0;
+  //data의 value를 비교하며 order count
   while(arr.length > 0) {
     const value = arr.shift();
-    
-    if(arr.length > 0 && Object.values(value) < Object.values(arr[0])) {
+    //arr에 value.priorty보다 높은게 있다면, 뒤도 돌아보지말고 arr.push(value)
+    if(arr.some(v => v.priorty > value.priorty)) {
       arr.push(value);
     } else {
-      queueList.push(value);
+      order++;
+      //더 진행할 필요 없이 location과 index와 같은게 있다면 return
+      if(value.index === location) {
+        return order;
+      }
     }
 
-  } 
-  //location에 해당하는 key index 찾기
-  return queueList.findIndex(v => Object.keys(v)[0] === String(location));
+  }
 }
