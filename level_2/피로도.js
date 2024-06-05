@@ -1,5 +1,4 @@
 function solution(k, dungeons) {
-  //다 어떻게 돌 수 있을까,,,,?
   //순열로 풀어야 할 거 같은데
   const totalArr = getPermutations(dungeons, dungeons.length);
   const visitedArr = [];
