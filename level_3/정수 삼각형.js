@@ -1,22 +1,13 @@
 function solution(triangle) {
-  return traverseTriangle(triangle, 0, 0);
-}
-
-/**
- * 삼각형 순회 및 최대 경로 합 계산
- * @param {*} triangle 
- * @param {*} row 
- * @param {*} col 
- */
-const traverseTriangle = (triangle, row, col) => {
-  // Base case: 가장 아래 행에 도달한 경우
-  if (row === triangle.length - 1) {
-    return triangle[row][col];
+  //재귀로 푸니까 시간초과가 난다.
+  //반복문으로 풀어보자.
+  for(let i = 1; i < triangle.length; i++) {
+    for(let j = 0; j < triangle[i].length; j++) {
+      const prevRight = triangle[i - 1][j] ?? 0;
+      const prevLeft = triangle[i - 1][j - 1] ?? 0;
+      //이전에 방문한 삼각형의 최대값
+      triangle[i][j] += Math.max(prevLeft, prevRight)
+    }
   }
-
-  // 현재 위치에서 아래로 내려가는 두 경로의 합 중 최대값을 선택하여 리턴
-  let leftPathSum = traverseTriangle(triangle, row + 1, col);
-  let rightPathSum = traverseTriangle(triangle, row + 1, col + 1);
-
-  return triangle[row][col] + Math.max(leftPathSum, rightPathSum);
-}
+  return Math.max(...triangle[triangle.length - 1])
+} 
