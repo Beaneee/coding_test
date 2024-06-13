@@ -1,14 +1,18 @@
 function solution(triangle) {
-  const n = triangle.length;
+  const root = triangle[0];
+  let answer = root[0];
+  let compareIdx = 0;
 
-  // 아래층부터 시작하여 위층으로 올라가며 최대 합 계산
-  for (let i = n - 2; i >= 0; i--) {
-      for (let j = 0; j <= i; j++) {
-          // 현재 위치의 숫자에 아래층에서 왼쪽이나 오른쪽에서 올 수 있는 최대 합을 더하여 업데이트
-          triangle[i][j] += Math.max(triangle[i + 1][j], triangle[i + 1][j + 1]);
-      }
+  //이미 root를 가지고 있기 때문에 1부터 시작
+  for(let i = 1; i < triangle.length; i++) {
+    //이전 최대값 idx와 idx + 1의 최대값을 찾고
+    const max = Math.max(triangle[i][compareIdx], triangle[i][compareIdx + 1]);
+    //최대값의 idx를 갱신하고
+    const maxIdx = triangle[i].findIndex(v => v === max);
+    compareIdx = maxIdx
+    //값을 더한다.
+    answer += max
   }
 
-  // 맨 꼭대기에 위치한 값이 최종적으로 거쳐간 숫자의 최대 합
-  return triangle[0][0];
+  return answer;
 }
