@@ -89,8 +89,8 @@ function solution(scoville, K) {
 
   let heap = minHeap.result();
   let count = 0;
-  
-  while(heap.length > 1 && heap[0] <= K) {
+  //heap의 길이가 1이면 종료 && heap[0] 최솟값이 K보다 크거나 같을 경우 종료
+  while(heap.length > 1 && heap[0] < K) {
     count += 1;
     let min1 = minHeap.poll();
     let min2 = minHeap.poll();
