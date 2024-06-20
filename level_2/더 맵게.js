@@ -43,22 +43,28 @@ class MinHeap {
   //삭제
   bubbleDown() {
     let idx = 0;
-    let leftIdx = this.getLeftIdx(idx);
-    let rightIdx = this.getRightIdx(idx);
 
-    while(
-      (this.heap[leftIdx] !== undefined && this.heap[leftIdx] < this.heap[idx]) ||
-      (this.heap[rightIdx] !== undefined && this.heap[rightIdx] < this.heap[idx])
-    ) {
-      let smallerIdx = leftIdx;
+    while (true) {
+      let leftIdx = this.getLeftIdx(idx);
+      let rightIdx = this.getRightIdx(idx);
+      let smallerIdx = idx;
 
-      if(this.heap[rightIdx] !== undefined && this.heap[rightIdx] < this.heap[leftIdx]) {
+      // 왼쪽 자식이 존재하고, 현재 노드보다 작은 경우
+      if (leftIdx < this.size() && this.heap[leftIdx] < this.heap[smallerIdx]) {
+        smallerIdx = leftIdx;
+      }
+
+      // 오른쪽 자식이 존재하고, 현재 노드보다 작은 경우
+      if (rightIdx < this.size() && this.heap[rightIdx] < this.heap[smallerIdx]) {
         smallerIdx = rightIdx;
       }
+
+      // 더 이상 swap이 필요 없는 경우 루프 종료
+      if (smallerIdx === idx) break;
+
+      // swap 후 계속 진행
       this.swap(idx, smallerIdx);
       idx = smallerIdx;
-      leftIdx = this.getLeftIdx(idx);
-      rightIdx = this.getRightIdx(idx);
     }
   }
   
