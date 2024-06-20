@@ -101,12 +101,11 @@ function solution(n, works) {
   })
 
   //최댓값을 추출해서 비교
-  for(let i = 0; i < residueWorks; i++) {
+  for(let i = 0; i < n; i++) {
     const maxValue = heap.poll();
     heap.add(maxValue - 1);
-    const worksSum = heap.result().reduce((acc, curr) => acc += curr, 0);
-    if(worksSum <= residueWorks) break;
   }
+
   const arr = heap.result().map(v => v ** 2);
   return arr.reduce((acc, curr) => acc += curr, 0)
 }
