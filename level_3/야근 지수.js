@@ -72,7 +72,6 @@ class MaxHeap {
 
   //poll (추출)
   poll() {
-
     if(this.size() === 1) {
       return this.heap.pop();
     }
