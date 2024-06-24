@@ -12,10 +12,10 @@ const dfs = (str, arr) => {
   if(arr.includes(str)) return;
 
   arr.push(str);
+
   strArr.forEach(v => {
     dfs(str + v, arr);
   })
-
 }
 
 /**
