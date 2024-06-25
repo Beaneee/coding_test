@@ -1,59 +1,43 @@
 function solution(begin, target, words) {
-  //변환할 수 있는 단어들을 뽑아서
-  const wordList = getEnableWordList(words);
-  //begin에서 target으로 변하려면 어떤 문자가 바뀌어야 하는지 찾고
-  let changedList = getChagedWordList(begin, target);
-
   //만약 words target이 없다면 return 0
   if(!words.includes(target)) return 0
 
-  let step = 0;
-  let str = begin;
+  //유사하고 가까운 문자열을 찾는거니까 bfs를 이용하는게 맞다.
+  const queue = [];
+  const visited = { [begin]: 0};
 
-  while (true) {
+  queue.push(begin);
 
-    if(str === target) {
-      break
+  while (queue.length > 0) {
+    const currWord = queue.shift();
+
+    if(currWord === target) break
+
+    for (const word of words) {
+      //연결된 node를 생각하는 게 핵심이다.
+      if(isConnected(word, currWord) && !visited[word]) {
+        visited[word] = visited[currWord] + 1;
+        queue.push(word);
+      }
     }
-
-    //wordList에서 idx가 가장 가까운 것 부터 바꾸면서
-    const changeStr = wordList.find(v => changedList.includes(v));
-    const changeIdx = changedList.findIndex(v => v === changeStr);
-
-    str = str.split('');
-    str[changeIdx] = changeStr;
-    str = str.join('');
-
-    if(words.includes(str)) {
-     step += 1;
-    }
-
-    changedList.splice(changeIdx, 1);
   }
-  return step;
+  return  visited[target]
 }
 
 /**
- * 바꿀 수 있는 문자열 리스트
- * @param word
+ * 단 한 글자만 다르면 연결 nodee
+ * @param str1
+ * @param str2
  */
-const getEnableWordList = (words) => {
-  return [...new Set(words.join('').split(''))];
+const isConnected = (str1, str2) => {
+  let count = 0;
+
+  for (let i = 0; i < str1.length; i++) {
+    if(str1[i] !== str2[i]) count += 1;
+  }
+  return count === 1 ? true : false
 }
 
-/**
- * 바뀌어야 하는 단어 리스트
- * @param begin
- * @param target
- */
-const getChagedWordList = (begin, target) => {
-  const beginList = begin.split('');
-  const targetList = target.split('');
-
-
-
-  return targetList.filter(word => !beginList.includes(word))
-}
 
 
 
