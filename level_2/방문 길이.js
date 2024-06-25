@@ -1,31 +1,33 @@
 function solution(dirs) {
   const moveList = dirs.split('');
-  let x = 0;
-  let y = 0;
+  const moveObj = { 'U' : [0, 1], 'D': [0,-1], 'R': [1, 0], 'L': [-1, 0] };
+
+  let curr = [0, 0];
   //방문한 좌료를 hash map으로 해보자.
-  const visited = { [String(x) + String(y)]: true };
+  const visited = {};
+
   //좌표를 돌면서
   moveList.forEach(v => {
+    const moveObjX = moveObj[v][0];
+    const moveObjY = moveObj[v][1];
 
-    if(v === 'U') {
-      y += 1;
+    const next = [curr[0] + moveObjX, curr[1] + moveObjY];
+
+    // 경계를 벗어나는 경우 무시
+    if (next[0] < -5 || next[0] > 5 || next[1] < -5 || next[1] > 5) {
+      return;
+    }
+    //양방향으로 봐야한다.
+    const path1 = `${curr[0]},${curr[1]}-${next[0]},${next[1]}`;
+    const path2 = `${next[0]},${next[1]}-${curr[0]},${curr[1]}`;
+
+    if (!visited[path1]) {
+      visited[path1] = true;
+      visited[path2] = true;
     }
 
-    if(v === 'D') {
-      y -= 1;
-    }
-
-    if(v === 'R') {
-      x += 1;
-    }
-
-    if(v === 'L') {
-      x -= 1;
-    }
-    if(!visited[String(x) + String(y)] && ( x >= -5 && x <= 5 ) && ( y >= -5 && y <= 5 )) {
-      //방문했던 좌표는 count하지 않으면 되겄다. => 아! 방문한 좌표의 총 개수만 count하면 되겠네.
-      visited[String(x) + String(y)] = true;
-    }
+    curr = next; // 현재 위치를 다음 위치로 업데이트
   })
-  return Object.keys(visited).length
+
+  return Object.keys(visited).length / 2
 }
