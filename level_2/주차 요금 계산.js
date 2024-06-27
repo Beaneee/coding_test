@@ -1,6 +1,7 @@
 function solution(fees, records) {
   const vehTimeHash = {}; //입차 시간
   const parkTimeHash = {}; //누적 시간
+  const result = [];
 
   //누적 주차 시간을 먼저 구해놓자.
   for (let i = 0; i < records.length; i++) {
@@ -22,8 +23,19 @@ function solution(fees, records) {
     const entryTime = v[1];
     calculateParkingTime(entryTime, '23:59', veh, parkTimeHash, vehTimeHash);
   })
-  console.log('입차', vehTimeHash);
-  console.log('누적', parkTimeHash);
+
+  //주차요금 계산
+  Object.entries(parkTimeHash)
+    .sort(([vehA], [vehB]) => vehA.localeCompare(vehB)) // 차량 번호 순으로 정렬
+    .forEach(v => {
+    const parkingTime = v[1];
+    const fee = calcuateParkingFee(fees[0], fees[1],  fees[2], fees[3], parkingTime);
+
+    result.push(fee)
+
+  })
+
+  return result;
 }
 /**
  * 시간을 분으로 바꾸는 함수
@@ -48,6 +60,25 @@ const calculateParkingTime = (entryTime, time, veh, parkTimeHash, vehTimeHash) =
   if (!parkTimeHash[veh]) {
     parkTimeHash[veh] = 0;
   }
+
   parkTimeHash[veh] += duration;
   delete vehTimeHash[veh];
 }
+
+/**
+ * 주차 요금 계산
+ * @param defaultTime
+ * @param defaultFee
+ * @param unitTime
+ * @param unitFee
+ * @param parkingTime
+ */
+const calcuateParkingFee = (defaultTime, defaultFee, unitTime, unitFee, parkingTime) => {
+
+  if(parkingTime <= defaultTime) {
+    return defaultFee;
+  }
+
+  return defaultFee + Math.ceil((parkingTime - defaultTime) / unitTime) * unitFee;
+}
+
