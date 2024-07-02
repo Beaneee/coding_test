@@ -33,6 +33,7 @@ function solution(topping) {
       sliceTopping.set(t, sliceTopping.get(t) + 1);
       continue
     }
+
     sliceTopping.set(t, 1);
   }
 
