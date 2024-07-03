@@ -1,41 +1,26 @@
 function solution(skill, skill_trees) {
-  const skillOrder = skill.split('');
-  let count = 0;
-  for (let i = 0; i < skill_trees.length; i++) {
-    let stack = [];
-    const skills = skill_trees[i].split('');
+  let result = 0;
+  //스킬의 요소들을 뽑고
+  const skilsStack = skill_trees.map(v => {
+    return v.split('').filter(el => skill.includes(el))
+  })
 
-    //스킬트리에서 스킬순서를 담고
-    for (let j = 0; j < skills.length; j++) {
-      if(skillOrder.includes(skills[j])) {
-        stack.push(skills[j]);
+  //가능한 트리인지 확인한다.
+  for (let i = 0; i < skilsStack.length; i++) {
+    let isValid = true;
+
+    for (let j = 0; j < skilsStack[i].length; j++) {
+      if(skill[j] !== skilsStack[i][j]) {
+        //하나라도 일치하지 않으면
+        isValid = false;
+        break
       }
     }
 
-    let saveSkillOrder;
-    let isValid = false;
-
-    if(stack[0] !== skillOrder[0]) continue;
-
-    //올바른 스킬순서인지 검사한다.
-    while (stack.length) {
-      saveSkillOrder = stack.shift();
-      const findSkillOrderIdx = skillOrder.findIndex(v => v === saveSkillOrder);
-
-      if(!stack[0] || !skillOrder[findSkillOrderIdx + 1]) break
-
-      if((stack[0] && skillOrder[findSkillOrderIdx + 1]) && stack[0] === skillOrder[findSkillOrderIdx + 1]) {
-        isValid = true;
-        continue;
-      }
-
-      isValid = false;
-      break
-    }
     if(isValid) {
-      count += 1;
+      result += 1;
     }
   }
 
-  return count;
+  return result;
 }
