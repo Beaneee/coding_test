@@ -1,19 +1,15 @@
 function solution(n, s) {
-  let max = 0;
+  if(n > s) return [-1];
   let answer = [];
 
-  for(let i = 1; i <= 10000; i++) {
-    for(let j = 1; j <= 10000; j++) {
-      if(i <= j) {
-        if(i + j === s) {
-          if(max < i * j) {
-            max = i * j;
-            answer = [i, j];
-          }
-        }
-      }
-    }
+  while (true) {
+    let value = Math.floor(s / n);
+    answer.push(value);
+    s = s - value;
+    n = n - 1;
+
+    if(s === 0) break;
   }
 
-  return max ? answer : [-1]
+  return  answer
 }
