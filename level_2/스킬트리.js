@@ -10,6 +10,7 @@ function solution(skill, skill_trees) {
     let isValid = true;
 
     for (let j = 0; j < skilsStack[i].length; j++) {
+
       if(skill[j] !== skilsStack[i][j]) {
         //하나라도 일치하지 않으면
         isValid = false;
