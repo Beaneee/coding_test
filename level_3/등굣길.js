@@ -18,7 +18,8 @@ function solution(m, n, puddles) {
   //비온 곳은 못가게 하고
   for (let i = 0; i < puddles.length; i++) {
     const [x, y] = puddles[i];
-    maps[x-1][y-1] = -1;
+    //x, y 설정을 잘못해줬다.
+    maps[y-1][x-1] = -1;
   }
 
   //탐색 시작
