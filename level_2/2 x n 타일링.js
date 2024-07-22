@@ -4,7 +4,8 @@ function solution(n) {
   dp[1] = 2;
 
   for (let i = 2; i < n; i++) {
-    dp[i] = (dp[i - 1] + dp[i - 2]) % 1000000007;
+    const sum = dp[i - 1] + dp[i - 2];
+    dp[i] = sum > 1000000007 ? sum % 1000000007 : sum ;
   }
 
   return dp[n-1];
