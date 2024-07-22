@@ -1,5 +1,5 @@
 function solution(n) {
-  let dp = new Array(n + 1).fill(0); // n + 1만큼 배열 생성
+  let dp = [];
   dp[0] = 1;
   dp[1] = 2;
 
