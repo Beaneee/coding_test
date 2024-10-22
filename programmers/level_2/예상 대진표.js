@@ -23,6 +23,6 @@ function solution(n,a,b) {
 //예를들어, 2-3일 경우에도 max - min = 1이다.
 
 //종료조건은 max === min이다.
-if(max - min === 1) {
-  return count
-}
+// if(max - min === 1) {
+//   return count
+// }
