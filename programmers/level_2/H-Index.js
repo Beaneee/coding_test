@@ -3,7 +3,6 @@ function solution(citations) {
   //오름차순 정렬
   citations = citations.sort((a, b) => a - b)
   let n = citations.length
-  
   for (let i = 0; i < n; i++) {
       let Hindex = n-i
       if (Hindex <= citations[i]) {
@@ -11,6 +10,6 @@ function solution(citations) {
           break
       }
   }
-  
+
   return answer;
 }
