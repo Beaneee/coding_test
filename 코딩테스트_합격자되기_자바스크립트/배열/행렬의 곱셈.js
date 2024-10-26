@@ -4,7 +4,10 @@ function solution(arr1, arr2) {
   // 단, 같은 index를 가진 요소로만 곱해져야한다.
 
   // 배열을 2차원으로 초기화 하고
-  const result =  new Array(arr1.length).fill(0).map(() => new Array(arr2.length));
+  // 배열의 초기화가 잘못됨
+  // const result =  new Array(arr1.length).fill(0).map(() => new Array(arr2.length));
+  const result = Array.from({ length: arr1.length }, () => Array(arr2.length).fill(0));
+
 
   // arr2 배열을 다시 세팅해야 한다. 예를들어 ,[5, 2, 3] 이렇게 index로 세팅되어야한다. -> 이것도 함수로 만들자.
   const transformArr2 = transformArr(arr2);
