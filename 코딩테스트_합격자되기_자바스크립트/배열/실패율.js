@@ -7,5 +7,5 @@ function solution(N, stages) {
   // 실패율이 같은 스테이지가 있다면 작은 번호의 스테이지가 먼저 오도록 하면 된다.
 
   // 실패율 내림 차순으로 정렬 후 return
-  // commit test
+  // commit test2
 }
