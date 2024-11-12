@@ -32,7 +32,7 @@ function solution(N, stages) {
   }).sort((a, b) => b.value - a.value).map((vv) => {
     return Number(vv.key)
   });
-
+  
   // 실패율 return
   return result.filter(stage => stage < N + 1);
 }
