@@ -32,10 +32,7 @@ function solution(N, stages) {
   }).sort((a, b) => b.value - a.value).map((vv) => {
     return Number(vv.key)
   });
-
+  
   // 실패율 return
   return result.filter(stage => stage < N + 1);
 }
-
-console.log(solution(5, [2, 1, 2, 6, 2, 4, 3, 3]));
-console.log(solution(4, [4,4,4,4,4]))
