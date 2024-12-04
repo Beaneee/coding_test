@@ -40,8 +40,9 @@ const isValid = (arr) => {
 
     // pop isEmpty
     if(!strPair[str]) {
-      if (stack.length === 0) return false;
-      stack.pop();
+      // 직전 push한 괄호와 짝이 맞아야 한다.
+      const compair = stack.pop();
+      if (!compair || strPair[compair] !== str) return false;
     }
   }
 
@@ -51,5 +52,5 @@ const isValid = (arr) => {
 
 console.log(solution('[](){}'));
 console.log(solution('}]()[{'));
-console.log(solution('[)(]'));
+console.log(solution('[)(]')); // 예외 케이스
 console.log(solution('}}}'));
