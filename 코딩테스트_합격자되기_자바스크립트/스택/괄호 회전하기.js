@@ -1,15 +1,52 @@
 const solution = (s) => {
-  console.log(s);
-
+  let result = 0;
   // s의 길이 만큼 pop / push를 진행한다.
+  const strArr = s.split('');
+  for (let i = 0; i < s.length; i++) {
+    // i 만큼 회전
+    if(i > 0) {
+      const first = strArr.shift();
+      strArr.push(first);
+    }
+    // 괄호 짝이 맞는지 검사한다.
+    if(isValid(strArr)) {
+      // 맞으면 result를 하나씩 더해준다.
+      result += 1;
+    }
+  }
 
-  // 괄호 짝이 맞는지 검사한다.
-
-  // 맞으면 result를 하나씩 더해준다.
-  // commit test
-  return 0;
+  return result;
 }
 
+/**
+ * 괄호 짝 검사
+ * @param arr
+ * @returns {boolean}
+ */
+const isValid = (arr) => {
+  let stack = [];
+  const strPair = {
+    '(' : ')',
+    '{' : '}',
+    '[' : ']'
+  }
+
+  for (const str of arr) {
+    // push isFull
+    if(strPair[str]) {
+      if (stack.length === arr.length) return false;
+      stack.push(str);
+    }
+
+    // pop isEmpty
+    if(!strPair[str]) {
+      if (stack.length === 0) return false;
+      stack.pop();
+    }
+  }
+
+  return stack.length === 0;
+}
 
 
 console.log(solution('[](){}'));
