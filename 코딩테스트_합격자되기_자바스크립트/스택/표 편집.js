@@ -8,5 +8,6 @@ const solution = (n, k, cmd) => {
   // 주어진 cmd 배열 요소를 하나씩 처리
 
   // 삭제된 행의 위치에 X를 그렇지 않은 행의 위치에 O를 포함하는 문자열 반환
+  // commit test
 }
 
