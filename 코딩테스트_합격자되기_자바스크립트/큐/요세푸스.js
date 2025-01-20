@@ -14,11 +14,6 @@ class Queue {
     return this.items[this.front++];
   }
 
-  // isEmpty
-  isEmpty() {
-    return this.front === this.rear;
-  }
-
   size () {
     return this.rear - this.front;
   }
@@ -29,19 +24,21 @@ const solution = (N, K) => {
 
   // 모두 push
   for (let i = 0; i < N; i++) {
-    q.push(i);
+    q.push(i + 1);
   }
 
-  console.log(q.size())
-
-
   while (q.size() > 1) {
-    // 1번 번호표를 가진 사람을 기준으로 K번째 사람을 없앤다. (front 기준으로 자른다.
-    // 없앤 사람 다음 사람을 기준으로 다시 K번째 사람을 없앤다.
+    // K - 1까지 뒤에 이어붙이면, 결국 K번째가 front가 된다.
+    for (let i = 0; i < K - 1; i++) {
+      q.push(q.pop());
+    }
+    // front가 된 K를 pop한다.
+    q.pop();
   }
 
   // 마지막까지 살아 있는 사람을 return 한다.
+  return q.pop();
 }
 
 
-solution(5, 2);
+console.log(solution(5, 2));
