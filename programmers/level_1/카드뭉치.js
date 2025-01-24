@@ -16,6 +16,9 @@ function solution(cards1, cards2, goal) {
     result.push(text);
   }
 
+  // result의 길이와 goal의 길이가 다르다면 No!
+  if(result.length !== goal.length) return 'No'
+
   let answer = 'Yes';
 
   // 모두 사용하는게 아니라 만들 수 있으면 Yes 였다.
