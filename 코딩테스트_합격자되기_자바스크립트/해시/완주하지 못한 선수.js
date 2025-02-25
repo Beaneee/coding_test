@@ -1,11 +1,23 @@
 function solution(participant, completion) {
-  // 참가자 중에는 동명이인이 있을 수 있습니다.
+  const hash = {};
 
-  // 참가자의 이름으로 hash를 생성한다.
+  // 참가자 이름으로 hash 값 초기화 및 생성
+  for (const part of participant) {
+    if(hash[part]) {
+      hash[part] = hash[part] + 1;
+    } else {
+      hash[part] = 1;
+    }
+  }
 
-  // 동명이인이 있을 수 있으므로 value는 number로
+  // 완주한 사람 지워주기
+  for (const comp of completion) {
+    if(hash[comp]) {
+      hash[comp] -= 1;
+    }
+  }
 
-  // completion에 있으면 hash value - 1;
-
-  // 양수인 hash key를 return 한다.
+  // value가 양수인 사람이 완주하지 못한 사람
+  const positiveKey = Object.entries(hash).find(([key, value]) => value > 0)[0];
+  return positiveKey;
 }
