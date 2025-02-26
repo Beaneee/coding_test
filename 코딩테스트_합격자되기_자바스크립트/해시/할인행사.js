@@ -3,34 +3,31 @@ const solution = (want, number, discount) => {
   const hash = want.reduce((acc, part, idx) => {
     acc[part] = number[idx];
     return acc;
-  }, {})
+  }, {});
 
-  let initIndx = 0;
-  let startIdx = initIndx;
+  let startIdx = 0;
+  let result = 0;
 
   // discount를 10일까지 순회하면서
-  while (true) {
+  while (startIdx + 9 < discount.length) {
+    // hash를 복사하여 초기 상태로 만들기
+    const tempHash = { ...hash };
 
-    if(initIndx > discount.length - 1) return 0;
+    // 10일간의 할인 항목 처리
+    for (let i = startIdx; i < startIdx + 10; i++) {
+      const key = discount[i];
+      if (tempHash[key] > 0) { // 존재하고 수량이 남아있을 때만 감소
+        tempHash[key]--;
+      }
+    }
 
-    const key = discount[startIdx];
-
-    if(hash[key]) {
-      // want의 count를 지워줌
-      hash[key]--;
+    // 모든 상품의 수량이 0이 되었는지 확인
+    if (Object.values(tempHash).every(count => count === 0)) {
+      result++;
     }
 
     startIdx++;
-
-    // 종료 조건
-    if(startIdx === initIndx + 9) {
-      if(Object.keys(hash).find(key => hash[key] > 0)) {
-        initIndx++;
-        continue;
-      }
-      // 모두 0이 되는 경우 중 가장 짧은 날을 return;
-      return initIndx;
-    }
-
   }
-}
+
+  return result;
+};
