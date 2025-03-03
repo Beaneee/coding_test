@@ -5,9 +5,15 @@ function solution(record) {
   // record를 순회하면 최종적으로 바뀐 nickName이 저장된다.
   const hash = record.reduce((acc, part) => {
     const recordSplit = part.split(' ');
-    const key = recordSplit[1];
-    const value =recordSplit[2];
-    acc[key] = value;
+    const action = recordSplit[0];
+
+    // 모두 바꿔주면 안되는거지,,,,
+    if(action !== 'Leave') {
+      const key = recordSplit[1];
+      const value =recordSplit[2];
+      acc[key] = value;
+    }
+
     return acc
   }, {});
 
