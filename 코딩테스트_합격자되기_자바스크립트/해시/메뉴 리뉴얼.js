@@ -17,11 +17,30 @@ function getCombinations(arr, selectNum) {
 
 function solution(orders, course) {
   const result = [];
-  // course를 순회해서 코스 요리를 구성할 개수로
 
-  // orders에서 생성할 수 있는 조합을 구한다.
 
-  // 조합-count를 hash로 구성한다.
+  for (const num of course) {
+    // 메뉴에서 나올 코스요리를 조합함
+    const menuList = [];
+    for (const order of orders) {
+      // const orderArr = order.split('').sort();
+      const orderArr = order.split('');
+      const list = getCombinations(orderArr, num);
+      menuList.push(...list);
+    }
+
+    const courseHash = {};
+
+    // 각각 나온 메뉴 구성을 count 한다.
+    for (const menu of menuList) {
+      const menuKey = menu.join('')
+      courseHash[menuKey] = (courseHash[menuKey] || 0) + 1;
+    }
+
+    console.log('courseHash', courseHash)
+  }
+
+
 
   // 가장 많은 count를 가진 key를 result에 push한다.
 
