@@ -13,6 +13,23 @@ class BST {
 
   // 탐색 트리 생성
   insert(key) {
+    // root가 없을 경우
+    if(this.root) {
+      // 노드를 새로 생성한다.
+      // 생성된 노드를 root로 한다.
+    }
+
+    // root가 있을 경우
+    if(!this.root) {
+      // key가 부모 노드 보다 작다.
+      // 왼쪽 노드가 있다 없다를 확인한 후
+      // 왼쪽 노드로 할당한다.
+
+
+      // key가 root보다 크다.
+      // 오른쪽 노드가 있다 없다를 확인한 후
+      // 오른쪽 노드로 할당한다.
+    }
 
   }
 
@@ -24,7 +41,11 @@ class BST {
 }
 
 const solution = (lst, searchList) => {
+  const bst = new BST();
   // 탐색 트리 생성
+  for (const node of lst) {
+    bst.insert(node);
+  }
 
   // 탐색 트리로 검색
 }
