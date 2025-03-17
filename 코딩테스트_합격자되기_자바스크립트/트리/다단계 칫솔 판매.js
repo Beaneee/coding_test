@@ -4,6 +4,7 @@ function solution(enroll, referral, seller, amount) {
   // 추천인 트리 또는 해시를 생성한다.
   for (const idx in enroll) {
     parent[enroll[idx]] = referral[idx];
+    profits[enroll[idx]] = 0;
   }
 
   // seller를 순회하여
@@ -15,7 +16,7 @@ function solution(enroll, referral, seller, amount) {
       const giveMoney = Math.floor(money * 0.1); // 주는 몫
       const keepMoney = money - giveMoney;// 본인이 갖는 몫
 
-      profits[person] = (profits[person] || 0) + keepMoney;
+      profits[person] = profits[person] + keepMoney;
       person = parent[person];
       money = giveMoney;
     }
