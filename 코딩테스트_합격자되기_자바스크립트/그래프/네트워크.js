@@ -1,19 +1,30 @@
 const dfs = (graph, node, visited) => {
-  const stack = [];
-  // 시작 노드를 push하고
-  // 방문처리
+  let connect = 0;
+  visited.add(node);
 
-  // stack이 비어있다면 종료
+  (graph[String(node)] || []).forEach((v) => {
+    if (!visited.has(v)) {
+      connect = (connect || 1) + dfs(graph, v, visited);
+    }
+  });
 
-  // pop
-  // 방문하지 않았다면 방문처리
-
-  // 인접노드를 확인해서
-  // 방문하지 않은 노드들에 대해서만
-  // 재귀
-}
+  return connect;
+};
 
 function solution(n, computers) {
-  // 인접 리스트를 만들고
-  // dfs를 진행한다.
+  const adjList = {};
+
+  computers.forEach((arr, index) => {
+    arr.forEach((v, idx) => {
+      if (index !== idx && v) {
+        if (!adjList[index]) adjList[index] = [];
+        adjList[index].push(idx);
+      }
+    });
+  });
+
+  const visited = new Set();
+  const connect = dfs(adjList, 0, visited);
+
+  return computers.length - connect;
 }
