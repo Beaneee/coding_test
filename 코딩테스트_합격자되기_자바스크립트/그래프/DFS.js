@@ -17,7 +17,10 @@ const dfs = (graph, node, visited) => {
       // push하고, pop하고, 방문여부를 확인한다.
       // 반복한다.
       // 언제까지? 스택이 비어있을 때 동안.
-      dfs(graph, v, visited);
+      // 아직 방문하지 않은 노드들에 대해서
+      if(!visited.has(v)) {
+        dfs(graph, v, visited);
+      }
     })
   }
 }
