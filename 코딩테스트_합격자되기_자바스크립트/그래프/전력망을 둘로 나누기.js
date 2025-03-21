@@ -1,9 +1,30 @@
+const dfs = (graph, node, visited) => {
+  let cnt = 1;
+  visited.add(node);
+
+  (graph[node] || []).forEach(v => {
+    if(!visited.has(v)) {
+      cnt += dfs(graph, v, visited);
+    }
+  })
+  return cnt;
+}
+
 function solution(n, wires) {
-  // dfs -> 완전탐색
 
-  // 인접 리스트를 만든다.
+  for (let i = 0; i < n; i++) {
+    const adjList = {};
+    const arr = wires.filter((v, idx) => i !== idx);
 
-  // dfs를 진행한다.
-  // 하나를 끊는다,,,,? -> 한 index를 건너뛴다는 의미?
-  // 개수를 비교해서 차이가 가장 적은 절대값을 return 한다.
+    for (const [u ,v] of arr) {
+      if(!adjList[u]) adjList[u] = [];
+      adjList[u].push(v);
+    }
+
+    const start = Object.keys(adjList)[0];
+    const visited = new Set();
+
+    const count = dfs(adjList, Number(start), visited);
+  }
+
 }
