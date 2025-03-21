@@ -1,14 +1,11 @@
 const dfs = (graph, node, visited) => {
-  let connect = 0;
   visited.add(node);
 
   (graph[String(node)] || []).forEach((v) => {
     if (!visited.has(v)) {
-      connect = (connect || 1) + dfs(graph, v, visited);
+      dfs(graph, v, visited);
     }
   });
-
-  return connect;
 };
 
 function solution(n, computers) {
@@ -23,8 +20,15 @@ function solution(n, computers) {
     });
   });
 
+  let count = 0;
   const visited = new Set();
-  const connect = dfs(adjList, 0, visited);
+  // 모든 노드를 시작으로 탐색해야 한다.
+  for (let i = 0; i < n; i++) {
+    if (!visited.has(i)) {
+      count++;
+      dfs(adjList, i, visited);
+    }
+  }
 
-  return computers.length - connect;
+  return count;
 }
