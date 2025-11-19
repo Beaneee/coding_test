@@ -19,7 +19,6 @@ const BST = (nodeinfo) => {
     return ay === by ? ax - bx : by - ay
   })
 
-
   let root = null;
 
   for (const node of nodes) {
@@ -29,6 +28,7 @@ const BST = (nodeinfo) => {
     } else {
       // root부터 시작
       let curr = root;
+      // 삽입할 노드 생성
       const newNode = new Node(nodeinfo[node - 1], node);
 
       while(true) {
@@ -59,8 +59,36 @@ const BST = (nodeinfo) => {
   return root;
 }
 
+// 전위 순회
+// 부모 -> 왼쪽 -> 오른쪽
+const preOrder = (root) => {
+  const arr = [];
+  const stack = [root];
+
+  while(stack.length) {
+    const node = stack.pop();
+    if(!node) continue; // 왼쪽 or 오른쪽 노드가 없을 수 있으니까.
+
+    arr.push(node.num);
+    stack.push(node.right);
+    stack.push(node.left);
+  }
+
+  return arr
+}
+
+// 후위 순회
+// 왼쪽 -> 오른쪽 -> 부모
+const postOrder = (root) => {
+
+  return [];
+}
+
 
 function solution(nodeinfo) {
   const root = BST(nodeinfo);
-  console.log(root);
+  const pre = preOrder(root);
+  const post = postOrder(root);
+
+  return [pre, post];
 }
