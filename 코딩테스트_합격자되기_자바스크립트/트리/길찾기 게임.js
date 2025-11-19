@@ -80,8 +80,24 @@ const preOrder = (root) => {
 // 후위 순회
 // 왼쪽 -> 오른쪽 -> 부모
 const postOrder = (root) => {
+  const arr = [];
+  const stack = [[root, false]];
 
-  return [];
+  while(stack.length) {
+    const [node, visited] = stack.pop();
+    if(!node) continue;
+
+    //방문을 했냐 안했냐
+    if(!visited) {
+      stack.push([node, true]);
+      stack.push([node.right, false]); // 오른쪽을 먼저 넣는 이유는 왼쪽을 먼저 방문해야하기 때문.
+      stack.push([node.left, false]);
+    } else {
+      arr.push(node.num);
+    }
+  }
+
+  return arr;
 }
 
 
