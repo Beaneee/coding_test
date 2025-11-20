@@ -1,24 +1,34 @@
 function solution(n, words) {
-  let prevWordList = [];
-  let result = [];
+  const wordsSet = new Set();
+  let flag = false;
+  let endNum = 1;
+  let lastStr = '';
 
-  for(let i = 0; i < words.length; i++) {
-    //1. 중복된 단어를 말하거나
-    if(prevWordList.includes(words[i])) {
-      return [(i % n) + 1, Math.floor(i / n) + 1];
+
+  for (word of words) {
+    // 1. 이미 말한 단어를 한 경우
+    if (wordsSet.has(word)) {
+      flag = true;
+      break;
     }
 
-    if(prevWordList[i-1]) {
-      const lastOfPrevWord = prevWordList[i-1].charAt(prevWordList[i-1].length - 1);
-      const firstOfCurrWord = words[i].charAt(0); 
-      //2. 잘못된 단어를 말한 경우
-      if(lastOfPrevWord !== firstOfCurrWord) {
-        return [(i % n) + 1, Math.floor(i / n) + 1];
-      }
-
+    // 2. 잘못된 앞글자로 말한 경우
+    if(lastStr && word[0] !== lastStr) {
+      flag = true;
+      break;
     }
-    prevWordList.push(words[i]);
+
+    wordsSet.add(word);
+    lastStr = word[word.length - 1];
+    endNum++;
   }
-  //3. 틀린 사람이 없는 경우는 [0, 0]을 return
+
+  if(flag) {
+    const dropout = endNum % n === 0 ? n : endNum % n; // 탈락자
+    const dropoutOrder = Math.ceil(endNum / n); // 탈락 순서
+    return [dropout, dropoutOrder];
+  }
+
+  // 3. 탈락자가 발생하지 않는 경우
   return [0, 0];
 }
