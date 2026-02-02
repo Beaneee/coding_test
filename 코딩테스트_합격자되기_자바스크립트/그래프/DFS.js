@@ -1,45 +1,27 @@
-const dfs = (graph, node, visited) => {
-  const stack = [];
+const dfs = (graph, node, visited = new Set(), path = []) => {
+  // 방문처리
+  visited.add(node);
+  path.push(node);
 
-  stack.push(node);
-  // stack이 비어있다면 종료
-  while (stack.length) {
-    // 스택에 노드를 팝한다.
-    const currNode = stack.pop();
-    // 아직 방문하지 않았다면 방문 처리
-    if(visited && !visited.has(currNode)) {
-      visited.add(currNode);
-    }
-    // 방문했다면 아무런 행동을 하지 않는다.
-
-    // 인접한 모든 노드를 확인한다.
-    (graph[node] || []).forEach((v) => {
-      // push하고, pop하고, 방문여부를 확인한다.
-      // 반복한다.
-      // 언제까지? 스택이 비어있을 때 동안.
-      // 아직 방문하지 않은 노드들에 대해서
-      if(!visited.has(v)) {
-        dfs(graph, v, visited);
-      }
-    })
-  }
-}
+  // 인접노드 탐색
+  (graph[node] || []).forEach(v => {
+    if (!visited.has(v)) dfs(graph, v, visited, path);
+  })
+  return path;
+};
 
 const solution = (graph, start) => {
-  const visited = new Set();
-  // 인접 리스트로 만들고
+  // 1. 인접리스트 만들기
   const adjList = {};
   graph.forEach(([u, v]) => {
-    if(!adjList[u]) {
-      adjList[u] = [];
-    }
+    if (!adjList[u]) adjList[u] = [];
     adjList[u].push(v);
   })
-  // dfs
 
-  dfs(adjList, start, visited);
-  return Array.from(visited);
-}
+  // 2. DFS
+  const result = dfs(adjList, start);
+  return result;
+};
 
 const answer1 = solution([['A', 'B'], ['B', 'C'], ['C', 'D'], ['D', 'E']], 'A');
 const answer2 = solution([['A', 'B'], ['A', 'C'], ['B', 'D'], ['B', 'E'], ['C', 'F'], ['E', 'F']], 'A');
