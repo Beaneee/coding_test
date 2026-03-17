@@ -1,8 +1,8 @@
 class Queue {
   constructor() {
     this.items = [];
-    this.front = 0;
     this.rear = 0;
+    this.front = 0;
   }
 
   push(item) {
@@ -20,55 +20,37 @@ class Queue {
 
 }
 
-const bfs = (graph, node) => {
+function solution(maps) {
+  const moves = [[-1, 0], [0, -1], [0, 1], [1, 0]]; // [drow, dcol]
+  const n = maps.length;      // 행 수
+  const m = maps[0].length;   // 열 수
+  const dist = Array.from({length: n}, () => Array(m).fill(-1));
+
   const q = new Queue();
-  // 오른쪽, 왼쪽, 위, 아래 이동
-  const move = [[1,0], [-1,0], [0,1],[0,-1]];
-  const m = graph.length; // row
-  const n = graph[0].length; // col
-  const dist = Array.from({ length: m }, () => Array(n).fill(-1));
+  q.push([0, 0]); // [row, col]
+  dist[0][0] = 1;
 
-  // 시작노드 push
-  q.push(node);
-  // 방문처리
-  dist[node[0]][node[1]] = 1;
-
-  // q가 비어있는지 확인하고
   while (!q.isEmpty()) {
-    // pop한다.
-    const curr = q.pop();
+    const [row, col] = q.pop();
 
-    // 이동가능한 모든 경로에 대해서
-    for (const [dx, dy] of move) {
-      const row = curr[0] + dx;
-      const col = curr[1] + dy;
+    for (const [dr, dc] of moves) {
+      const nr = row + dr;
+      const nc = col + dc;
 
       // 경로를 벗어나거나
-      if (row < 0 || col < 0 || row >= m || col >= n) {
-        continue;
-      }
+      if (nr < 0 || nc < 0 || nr >= n || nc >= m) continue;
 
       // 벽이거나
-      if (graph[row][col] === 0) {
-        continue;
-      }
+      if (maps[nr][nc] === 0) continue;
 
-      // 갈 수 있는 경로일 경우에
-      // 방문여부을 확인한다.
-      if (dist[row][col] === -1) {
-        // push하고
-        q.push([row, col]);
-        // 방문처리한다.
-        // 이전 값을 누적한다.
-        dist[row][col] = dist[curr[0]][curr[1]] + 1;
+      // 방문할 수 있을 때
+      if (dist[nr][nc] === -1) {
+        // 방문 처리
+        q.push([nr, nc]);
+        dist[nr][nc] = dist[row][col] + 1;
       }
-
     }
-
   }
-  return dist[m - 1][n -1];
-}
 
-const solution = (maps) => {
-  return bfs(maps, [0, 0]);
+  return dist[n-1][m-1];
 }
