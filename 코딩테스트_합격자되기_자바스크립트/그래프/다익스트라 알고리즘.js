@@ -28,8 +28,7 @@ const solution = (graph, start) => {
 
     }
   }
-
-  console.log(dist);
+  return {dist, visited};
 }
 
 console.log(solution({ A: { B: 9, C: 3 }, B: { A: 5 }, C: { B: 1 } }, 'A'));
