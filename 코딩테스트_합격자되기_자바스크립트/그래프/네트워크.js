@@ -1,32 +1,25 @@
-const dfs = (graph, node, visited) => {
-  visited.add(node);
+function dfs(visited, computers, start) {
+  // 방문 처리
+  visited[start] = true;
 
-  (graph[String(node)] || []).forEach((v) => {
-    if (!visited.has(v)) {
-      dfs(graph, v, visited);
+  for (let j = 0; j < computers[start].length; j++) {
+    // 자신은 항상 1이니 방문하지 않고
+    // 연결 되어있고
+    // 방문하지 않았으면 다시 순회
+    if (!visited[j] && computers[start][j] === 1 && j !== start) {
+      dfs(visited, computers, j);
     }
-  });
-};
+  }
+}
 
 function solution(n, computers) {
-  const adjList = {};
-
-  computers.forEach((arr, index) => {
-    arr.forEach((v, idx) => {
-      if (index !== idx && v) {
-        if (!adjList[index]) adjList[index] = [];
-        adjList[index].push(idx);
-      }
-    });
-  });
-
+  const visited = Array(n).fill(false);
   let count = 0;
-  const visited = new Set();
-  // 모든 노드를 시작으로 탐색해야 한다.
-  for (let i = 0; i < n; i++) {
-    if (!visited.has(i)) {
+
+  for (let i = 0; i < n; i++)  {
+    if(!visited[i]) {
+      dfs(visited, computers, i);
       count++;
-      dfs(adjList, i, visited);
     }
   }
 
