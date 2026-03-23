@@ -1,41 +1,37 @@
-const dfs = (graph, node, visited) => {
-  // 여기서 초기화를 해주기 때문에
+const dfs = (graph, visited, node) => {
+  visited[node] = true;
   let cnt = 1;
-  visited.add(node);
 
   (graph[node] || []).forEach(v => {
-    if(!visited.has(v)) {
-      // 더해줘야 한다.
-      cnt += dfs(graph, v, visited);
+    if (!visited[v]) {
+      cnt += dfs(graph, visited, v);
     }
-  })
-  // 값을 return 해주고
+  });
+
   return cnt;
-}
+};
 
 function solution(n, wires) {
-  const result = [];
+  let result = Infinity;
 
-  for (let i = 0; i < n; i++) {
-    const adjList = {};
-    const arr = wires.filter((v, idx) => i !== idx);
+  for (let i = 0; i < wires.length; i++) {  // wires.length
+    const graph = {};
 
-    for (const [u, v] of arr) {
-      // 양방향으로 해줘야한다.
-      // 그렇지 않으면 한 방향으로만 탐색하게 된다. -> 중요!!!
-      if (!adjList[u]) adjList[u] = [];
-      if (!adjList[v]) adjList[v] = [];
-      adjList[u].push(v);
-      adjList[v].push(u);
+    for (let j = 0; j < wires.length; j++) {
+      if (i === j) continue;  // i번째 간선만 제거
+
+      const [u, v] = wires[j];
+      if (!graph[u]) graph[u] = [];
+      if (!graph[v]) graph[v] = [];
+      graph[u].push(v);
+      graph[v].push(u);
     }
 
-    const start = Object.keys(adjList)[0];
-    const visited = new Set();
-
-    const count = dfs(adjList, Number(start), visited);
-    const rest = n - count;
-    result.push(Math.abs(count - rest));
+    const visited = Array(n + 1).fill(false);
+    const count = dfs(graph, visited, 1);
+    const diff = Math.abs(count - (n - count));
+    result = Math.min(result, diff);
   }
 
-  return Math.min(...result);
+  return result;
 }
